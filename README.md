@@ -247,4 +247,51 @@ python3 -m venv .venv && . .venv/bin/activate && ./run_rl_swarm.sh
 2. ```
    cd rl-swarm
    ```
-   
+3.Open the file
+```
+nano $(python3 -c "import hivemind.p2p.p2p_daemon as m; print(m.__file__)")
+```
+4. press CTRL+W to search line
+```
+startup_timeout
+```
+5. change the line from
+startup_timeout: float = 15 to startup_timeout: float = 120
+6.Save the file by pressing:
+Ctrl + O  (then press Enter)
+Ctrl + X  (to exit nano)
+
+7. Restart Node with the following command
+ ```
+   ./run_rl_swarm.sh
+   ```
+
+#  🛠 UnboundLocalError: cannot access local variable 'current_batch' 🛠
+
+1.run this on rl-swarm folder
+```
+cd $HOME/rl-swarm/hivemind_exp/configs/mac/ && \
+sed -i \
+  -e 's/torch_dtype: .*/torch_dtype: float32/' \
+  -e 's/bf16: .*/bf16: false/' \
+  -e 's/tf32: .*/tf32: false/' \
+  -e 's/gradient_checkpointing: .*/gradient_checkpointing: false/' \
+  -e 's/per_device_train_batch_size: .*/per_device_train_batch_size: 1/' \
+grpo-qwen-2.5-0.5b-deepseek-r1.yaml && cd
+```
+What it changes:
+Sets torch_dtype to float32
+
+Disables bf16 and tf32
+
+Turns off gradient_checkpointing
+
+Sets per_device_train_batch_size to 1
+2.Navigate to the project folder
+```
+   cd rl-swarm
+   ```
+```
+   ./run_rl_swarm.sh
+   ```
+
