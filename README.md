@@ -103,9 +103,6 @@ source .venv/bin/activate
 
 * 5️⃣ Run the swarm Node 🚀
 
-```
-cd ..
-```
 
 ```
 ./run_rl_swarm.sh
