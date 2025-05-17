@@ -272,39 +272,7 @@ Ctrl + X  (to exit nano)
 
 1.run this on rl-swarm folder
 ```
-cd $HOME/rl-swarm/hivemind_exp/configs/mac/ && \
-sed -i \
-  -e 's/torch_dtype: .*/torch_dtype: float32/' \
-  -e 's/bf16: .*/bf16: false/' \
-  -e 's/tf32: .*/tf32: false/' \
-  -e 's/gradient_checkpointing: .*/gradient_checkpointing: false/' \
-  -e 's/per_device_train_batch_size: .*/per_device_train_batch_size: 1/' \
-grpo-qwen-2.5-0.5b-deepseek-r1.yaml && cd
-```
-What it changes:
-Sets torch_dtype to float32
+cd $HOME/rl-swarm/
 
-Disables bf16 and tf32
-
-Turns off gradient_checkpointing
-
-Sets per_device_train_batch_size to 1
-2.Navigate to the project folder
-```
-   cd rl-swarm
-   ```
-```
-   ./run_rl_swarm.sh
-   ```
-
-#  🛠 DHTNode bootstrap failed:' 🛠
-```
-cd $HOME/rl-swarm/hivemind_exp/configs/mac/ && \
-sed -i \
-  -e 's/torch_dtype: .*/torch_dtype: float32/' \
-  -e 's/bf16: .*/bf16: false/' \
-  -e 's/tf32: .*/tf32: false/' \
-  -e 's/gradient_checkpointing: .*/gradient_checkpointing: false/' \
-  -e 's/per_device_train_batch_size: .*/per_device_train_batch_size: 2/' \
-grpo-qwen-2.5-0.5b-deepseek-r1.yaml && cd
+RL_SWARM_UNSLOTH=False ./run_rl_swarm.sh
 ```
