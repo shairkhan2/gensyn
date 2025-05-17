@@ -213,17 +213,18 @@ cloudflared tunnel --url http://localhost:3000
 #  🛠 loading page issue 🛠
 
 1. Navigate to the project folder
-2. ```
+2.
+ ```
    cd rl-swarm
-   ```
+ ```
+
    3.Open the file for editing
 ```
 sudo apt update && sudo apt install nano -y
 ```
-
-    ```
-   nano modal-login/app/page.tsx
-   ```
+  ```
+nano modal-login/app/page.tsx
+```
 4.Use the arrow keys to scroll down in this file and look for this line:
 return (main className="flex min-h-screen flex-col items-center gap-4 justify-center text-center>
 
