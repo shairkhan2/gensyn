@@ -297,3 +297,14 @@ Sets per_device_train_batch_size to 1
    ./run_rl_swarm.sh
    ```
 
+#  🛠 DHTNode bootstrap failed:' 🛠
+```
+cd $HOME/rl-swarm/hivemind_exp/configs/mac/ && \
+sed -i \
+  -e 's/torch_dtype: .*/torch_dtype: float32/' \
+  -e 's/bf16: .*/bf16: false/' \
+  -e 's/tf32: .*/tf32: false/' \
+  -e 's/gradient_checkpointing: .*/gradient_checkpointing: false/' \
+  -e 's/per_device_train_batch_size: .*/per_device_train_batch_size: 2/' \
+grpo-qwen-2.5-0.5b-deepseek-r1.yaml && cd
+```
