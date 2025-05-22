@@ -85,12 +85,15 @@ page_loading_fix() {
 }
 
 killed_fix() {
-  echo -e "\n${GREEN}=== CREATING 16GB SWAP ===${NC}"
-  sudo fallocate -l 8G /swapfile
-  sudo chmod 600 /swapfile
-  sudo mkswap /swapfile
-  sudo swapon /swapfile
-  free -h
+  echo -e "\n${GREEN}=== CREATING 8GB SWAP ===${NC}"
+sudo swapoff /swapfile
+sudo rm /swapfile
+sudo fallocate -l 8G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+free -h
+
 }
 
 fix_15sec() {
