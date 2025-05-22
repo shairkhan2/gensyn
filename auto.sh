@@ -30,7 +30,8 @@ install_requirements() {
   echo -e "\n${GREEN}=== INSTALLING REQUIREMENTS ===${NC}"
   sudo apt update && sudo apt install -y python3 python3-venv python3-pip curl wget screen git lsof
   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt update && sudo apt install -y nodejs
-  echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list > /dev/null
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo gpg --dearmor -o /usr/share/keyrings/yarn-archive-keyring.gpg
+  echo "deb [signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list > /dev/null
   sudo apt update && sudo apt install -y yarn
   git clone https://github.com/gensyn-ai/rl-swarm.git
   wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
