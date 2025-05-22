@@ -28,15 +28,32 @@ show_menu() {
 
 install_requirements() {
   echo -e "\n${GREEN}=== INSTALLING REQUIREMENTS ===${NC}"
-  sudo apt update && sudo apt install -y python3 python3-venv python3-pip curl wget screen git lsof
-  curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt update && sudo apt install -y nodejs
-  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo gpg --dearmor -o /usr/share/keyrings/yarn-archive-keyring.gpg
-  echo "deb [signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list > /dev/null
+
+  # Base packages
+  sudo apt update && sudo apt install -y \
+    python3 python3-venv python3-pip curl wget screen git lsof gnupg
+
+  # Install Node.js 20
+  curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+  sudo apt update && sudo apt install -y nodejs
+
+  # Add Yarn GPG key and repo properly
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | \
+    gpg --dearmor | sudo tee /usr/share/keyrings/yarn-archive-keyring.gpg > /dev/null
+  echo "deb [signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian stable main" | \
+    sudo tee /etc/apt/sources.list.d/yarn.list > /dev/null
+
+  # Install Yarn
   sudo apt update && sudo apt install -y yarn
+
+  # Clone repo
   git clone https://github.com/gensyn-ai/rl-swarm.git
+
+  # Install Cloudflared
   wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
   sudo dpkg -i cloudflared-linux-amd64.deb
   rm cloudflared-linux-amd64.deb
+
   echo -e "${GREEN}\n=== REQUIREMENTS INSTALLED ===${NC}"
 }
 
