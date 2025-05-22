@@ -86,7 +86,7 @@ page_loading_fix() {
 
 killed_fix() {
   echo -e "\n${GREEN}=== CREATING 16GB SWAP ===${NC}"
-  sudo fallocate -l 16G /swapfile
+  sudo fallocate -l 8G /swapfile
   sudo chmod 600 /swapfile
   sudo mkswap /swapfile
   sudo swapon /swapfile
