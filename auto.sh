@@ -6,12 +6,12 @@ NC='\e[0m' # No Color
 show_menu() {
   clear
   echo -e "${GREEN}"
-  echo "========================================"
-  echo "|      Created by ${GREEN}SHAIR${NC}${GREEN}                 |"
-  echo "========================================"
-  echo "|      GENSYN CONTROL PANEL           |"
-  echo "========================================"
+  echo "╔══════════════════════════════════════╗"
+  echo "║      🔧  GENSYN SETUP TOOL          ║"
+  echo "║      Created by: SHAIR              ║"
+  echo "╚══════════════════════════════════════╝"
   echo -e "${NC}"
+
   
   echo -e "${GREEN}1) Install Requirements${NC}"
   echo -e "${GREEN}2) Start Gensyn${NC}"
