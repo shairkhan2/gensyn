@@ -49,9 +49,9 @@ run_rl_swarm() {
   # Run ./run_rl_swarm in rl-swarm directory inside detached screen
   screen -dmS gensyn bash -c '
     cd rl-swarm || exit
-    chmod +x ./run_rl_swarm
+    chmod +x ./run_rl_swarm.sh
     echo "[*] Running ./run_rl_swarm..."
-    ./run_rl_swarm
+    ./run_rl_swarm.sh
     exec bash
   '
 
