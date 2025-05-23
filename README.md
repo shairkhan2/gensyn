@@ -14,10 +14,10 @@
 * Open Your Vps
 # automate/single click 🛠
 ```
-curl -fsSL -o auto.sh https://raw.githubusercontent.com/shairkhan2/gensyn/main/auto.sh &&
-  chmod +x auto.sh &&
-  ./auto.sh
-'
+curl -fsSL -o menu.sh https://raw.githubusercontent.com/shairkhan2/gensyn/main/menu.sh && \
+chmod +x menu.sh && \
+./menu.sh
+
 ```
 
 
