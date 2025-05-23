@@ -58,6 +58,7 @@ install_requirements() {
 }
 
 start_gensyn() {
+  chmod +x rl-swarm/run_rl_swarm.sh
   screen -S Gensyn -X quit 2>/dev/null
   screen -dmS Gensyn bash -c 'cd rl-swarm && python3 -m venv .venv && source .venv/bin/activate && ./run_rl_swarm.sh; exec bash'
   screen -r Gensyn
