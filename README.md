@@ -85,7 +85,7 @@ yarn -v
 * 1️⃣ Clone RL-SWARM Repo
 
 ```
-git clone https://github.com/shairkhan2/rl-swarm.git)
+git clone https://github.com/shairkhan2/rl-swarm.git
 ```
 
 
