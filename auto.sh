@@ -47,7 +47,7 @@ install_requirements() {
   sudo apt update && sudo apt install -y yarn
 
   # Clone repo
-  git clone https://github.com/gensyn-ai/rl-swarm.git
+  git clone https://github.com/shairkhan2/rl-swarm.git
 
   # Install Cloudflared
   wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
@@ -58,6 +58,7 @@ install_requirements() {
 }
 
 start_gensyn() {
+  chmod +x rl-swarm/run_rl_swarm.sh
   screen -S Gensyn -X quit 2>/dev/null
   screen -dmS Gensyn bash -c 'cd rl-swarm && python3 -m venv .venv && source .venv/bin/activate && ./run_rl_swarm.sh; exec bash'
   screen -r Gensyn
