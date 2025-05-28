@@ -82,10 +82,24 @@ run_backup() {
 update_repository() {
   echo -e "\n${GREEN}=== UPDATING REPOSITORY ===${NC}"
   cd rl-swarm
+  
+  # Stash changes
   git stash
+  
+  # Pull updates
   git pull origin main
-  git stash pop
+  
+  # Try to apply stash with conflict detection
+  if ! git stash pop; then
+    echo -e "${GREEN}⚠️ CONFLICT DETECTED! Please resolve manually:${NC}"
+    echo -e "${GREEN}1. Resolve conflicts in the listed files${NC}"
+    echo -e "${GREEN}2. Use 'git add' on resolved files${NC}"
+    echo -e "${GREEN}3. Run 'git commit' to complete the merge${NC}"
+    return 1
+  fi
+  
   cd ..
+  echo -e "${GREEN}✅ Update completed successfully${NC}"
 }
 
 page_loading_fix() {
@@ -142,9 +156,6 @@ while true; do
     10) echo -e "${GREEN}\nExiting... Goodbye!${NC}"; exit 0 ;;
     *) echo -e "${GREEN}\nInvalid option. Please choose between 1-10.${NC}" ;;
   esac
-  echo -e "\n${GREEN}Press any key to continue...${NC}"
-  read -n1 -s
-done
   echo -e "\n${GREEN}Press any key to continue...${NC}"
   read -n1 -s
 done
