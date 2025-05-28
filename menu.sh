@@ -17,13 +17,14 @@ show_menu() {
   echo -e "${GREEN}2) Start Gensyn${NC}"
   echo -e "${GREEN}3) Cloud Tunnel${NC}"
   echo -e "${GREEN}4) Backup${NC}"
-  echo -e "${GREEN}5) Page Loading Fix${NC}"
-  echo -e "${GREEN}6) Killed Fix (16GB Swap)${NC}"
-  echo -e "${GREEN}7) 15sec Fixed (Timeout)${NC}"
-  echo -e "${GREEN}8) Current Batch Fixed${NC}"
-  echo -e "${GREEN}9) Exit${NC}"
+  echo -e "${GREEN}5) Update Repository${NC}"
+  echo -e "${GREEN}6) Page Loading Fix${NC}"
+  echo -e "${GREEN}7) Killed Fix (16GB Swap)${NC}"
+  echo -e "${GREEN}8) 15sec Fixed (Timeout)${NC}"
+  echo -e "${GREEN}9) Current Batch Fixed${NC}"
+  echo -e "${GREEN}10) Exit${NC}"
   echo "========================================"
-  echo -n -e "${GREEN}Enter choice [1-9]: ${NC}"
+  echo -n -e "${GREEN}Enter choice [1-10]: ${NC}"
 }
 
 install_requirements() {
@@ -78,6 +79,15 @@ run_backup() {
   ./backup.sh
 }
 
+update_repository() {
+  echo -e "\n${GREEN}=== UPDATING REPOSITORY ===${NC}"
+  cd rl-swarm
+  git stash
+  git pull origin main
+  git stash pop
+  cd ..
+}
+
 page_loading_fix() {
   echo -e "\n${GREEN}=== APPLYING PAGE LOADING FIX ===${NC}"
   cd rl-swarm
@@ -87,14 +97,13 @@ page_loading_fix() {
 
 killed_fix() {
   echo -e "\n${GREEN}=== CREATING 8GB SWAP ===${NC}"
-sudo swapoff /swapfile
-sudo rm /swapfile
-sudo fallocate -l 8G /swapfile
-sudo chmod 600 /swapfile
-sudo mkswap /swapfile
-sudo swapon /swapfile
-free -h
-
+  sudo swapoff /swapfile
+  sudo rm /swapfile
+  sudo fallocate -l 8G /swapfile
+  sudo chmod 600 /swapfile
+  sudo mkswap /swapfile
+  sudo swapon /swapfile
+  free -h
 }
 
 fix_15sec() {
@@ -125,13 +134,17 @@ while true; do
     2) start_gensyn ;;
     3) cloud_tunnel ;;
     4) run_backup ;;
-    5) page_loading_fix ;;
-    6) killed_fix ;;
-    7) fix_15sec ;;
-    8) current_batch_fix ;;
-    9) echo -e "${GREEN}\nExiting... Goodbye!${NC}"; exit 0 ;;
-    *) echo -e "${GREEN}\nInvalid option. Please choose between 1-9.${NC}" ;;
+    5) update_repository ;;
+    6) page_loading_fix ;;
+    7) killed_fix ;;
+    8) fix_15sec ;;
+    9) current_batch_fix ;;
+    10) echo -e "${GREEN}\nExiting... Goodbye!${NC}"; exit 0 ;;
+    *) echo -e "${GREEN}\nInvalid option. Please choose between 1-10.${NC}" ;;
   esac
+  echo -e "\n${GREEN}Press any key to continue...${NC}"
+  read -n1 -s
+done
   echo -e "\n${GREEN}Press any key to continue...${NC}"
   read -n1 -s
 done
