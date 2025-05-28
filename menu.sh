@@ -82,8 +82,8 @@ run_backup() {
 update_repository() {
   echo -e "\n${GREEN}=== FORCE UPDATING REPOSITORY ===${NC}"
   cd rl-swarm
-  git fetch origin
-  git reset --hard origin/main
+  git pull origin main
+  git stash pop
   cd ..
   echo -e "${GREEN}✅ Repository forcibly updated to match GitHub state${NC}"
 }
