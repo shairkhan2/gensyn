@@ -80,26 +80,12 @@ run_backup() {
 }
 
 update_repository() {
-  echo -e "\n${GREEN}=== UPDATING REPOSITORY ===${NC}"
+  echo -e "\n${GREEN}=== FORCE UPDATING REPOSITORY ===${NC}"
   cd rl-swarm
-  
-  # Stash changes
-  git stash
-  
-  # Pull updates
-  git pull origin main
-  
-  # Try to apply stash with conflict detection
-  if ! git stash pop; then
-    echo -e "${GREEN}⚠️ CONFLICT DETECTED! Please resolve manually:${NC}"
-    echo -e "${GREEN}1. Resolve conflicts in the listed files${NC}"
-    echo -e "${GREEN}2. Use 'git add' on resolved files${NC}"
-    echo -e "${GREEN}3. Run 'git commit' to complete the merge${NC}"
-    return 1
-  fi
-  
+  git fetch origin
+  git reset --hard origin/main
   cd ..
-  echo -e "${GREEN}✅ Update completed successfully${NC}"
+  echo -e "${GREEN}✅ Repository forcibly updated to match GitHub state${NC}"
 }
 
 page_loading_fix() {
