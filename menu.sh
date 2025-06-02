@@ -18,13 +18,14 @@ show_menu() {
   echo -e "${GREEN}3) Cloud Tunnel${NC}"
   echo -e "${GREEN}4) Backup${NC}"
   echo -e "${GREEN}5) Update Repository${NC}"
-  echo -e "${GREEN}6) Page Loading Fix${NC}"
-  echo -e "${GREEN}7) Killed Fix (16GB Swap)${NC}"
-  echo -e "${GREEN}8) 15sec Fixed (Timeout)${NC}"
-  echo -e "${GREEN}9) Current Batch Fixed${NC}"
-  echo -e "${GREEN}10) Exit${NC}"
+  echo -e "${GREEN}6) Remote Update & Backup${NC}"
+  echo -e "${GREEN}7) Page Loading Fix${NC}"
+  echo -e "${GREEN}8) Killed Fix (16GB Swap)${NC}"
+  echo -e "${GREEN}9) 15sec Fixed (Timeout)${NC}"
+  echo -e "${GREEN}10) Current Batch Fixed${NC}"
+  echo -e "${GREEN}11) Exit${NC}"
   echo "========================================"
-  echo -n -e "${GREEN}Enter choice [1-10]: ${NC}"
+  echo -n -e "${GREEN}Enter choice [1-11]: ${NC}"
 }
 
 install_requirements() {
@@ -89,42 +90,73 @@ update_repository() {
   echo -e "${GREEN}✅ Repository updated to match GitHub state${NC}"
 }
 
+remote_update_backup() {
+  echo -e "\n${GREEN}=== RUNNING REMOTE UPDATE & BACKUP ===${NC}"
+  echo "This will perform a complete refresh:"
+  echo "1. Backup your credentials"
+  echo "2. Remove old installation"
+  echo "3. Fetch latest version directly from GitHub"
+  echo "4. Restore your credentials"
+  echo -e "\n${GREEN}Starting remote update process...${NC}"
+  
+  # Execute remote script directly from GitHub
+  bash <(curl -s https://raw.githubusercontent.com/shairkhan2/gensyn/main/temp-backup.sh)
+  
+  echo -e "${GREEN}\n✅ Remote update completed!${NC}"
+  echo "Your installation is now up-to-date with the latest version"
+}
+
 page_loading_fix() {
   echo -e "\n${GREEN}=== APPLYING PAGE LOADING FIX ===${NC}"
   cd rl-swarm
   curl -o modal-login/app/page.tsx https://raw.githubusercontent.com/shairkhan2/gensyn/main/page.tsx
   cd ..
+  echo -e "${GREEN}✅ Page loading fix applied!${NC}"
 }
 
 killed_fix() {
-  echo -e "\n${GREEN}=== CREATING 8GB SWAP ===${NC}"
-  sudo swapoff /swapfile
-  sudo rm /swapfile
-  sudo fallocate -l 8G /swapfile
+  echo -e "\n${GREEN}=== CREATING 16GB SWAP SPACE ===${NC}"
+  sudo swapoff /swapfile >/dev/null 2>&1
+  sudo rm -f /swapfile
+  sudo fallocate -l 16G /swapfile
   sudo chmod 600 /swapfile
-  sudo mkswap /swapfile
+  sudo mkswap /swapfile >/dev/null
   sudo swapon /swapfile
+  echo -e "\n${GREEN}Current swap status:${NC}"
   free -h
+  echo -e "${GREEN}✅ 16GB swap space created!${NC}"
 }
 
 fix_15sec() {
-  echo -e "\n${GREEN}=== APPLYING 15SEC FIX ===${NC}"
+  echo -e "\n${GREEN}=== APPLYING 15SEC TIMEOUT FIX ===${NC}"
   cd $HOME/rl-swarm
-  sed -i -E 's/(startup_timeout: *float *= *)[0-9.]+/\1120/' $(python3 -c "import hivemind.p2p.p2p_daemon as m; print(m.__file__)")
+  target_file=$(python3 -c "import hivemind.p2p.p2p_daemon as m; print(m.__file__)")
+  
+  if [ -f "$target_file" ]; then
+    sed -i -E 's/(startup_timeout: *float *= *)[0-9.]+/\1120/' "$target_file"
+    echo -e "${GREEN}✅ Timeout increased to 120 seconds!${NC}"
+  else
+    echo -e "${GREEN}⚠️ Error: Target file not found!${NC}"
+  fi
   cd
 }
 
 current_batch_fix() {
-  echo -e "\n${GREEN}=== APPLYING BATCH FIX ===${NC}"
-  cd $HOME/rl-swarm/hivemind_exp/configs/mac/
-  sed -i \
-    -e 's/torch_dtype: .*/torch_dtype: float32/' \
-    -e 's/bf16: .*/bf16: false/' \
-    -e 's/tf32: .*/tf32: false/' \
-    -e 's/gradient_checkpointing: .*/gradient_checkpointing: false/' \
-    -e 's/per_device_train_batch_size: .*/per_device_train_batch_size: 2/' \
-    grpo-qwen-2.5-0.5b-deepseek-r1.yaml
-  cd
+  echo -e "\n${GREEN}=== APPLYING CURRENT BATCH FIX ===${NC}"
+  config_file="$HOME/rl-swarm/hivemind_exp/configs/mac/grpo-qwen-2.5-0.5b-deepseek-r1.yaml"
+  
+  if [ -f "$config_file" ]; then
+    sed -i \
+      -e 's/torch_dtype: .*/torch_dtype: float32/' \
+      -e 's/bf16: .*/bf16: false/' \
+      -e 's/tf32: .*/tf32: false/' \
+      -e 's/gradient_checkpointing: .*/gradient_checkpointing: false/' \
+      -e 's/per_device_train_batch_size: .*/per_device_train_batch_size: 2/' \
+      "$config_file"
+    echo -e "${GREEN}✅ Batch configuration updated!${NC}"
+  else
+    echo -e "${GREEN}⚠️ Error: Config file not found!${NC}"
+  fi
 }
 
 while true; do
@@ -136,12 +168,13 @@ while true; do
     3) cloud_tunnel ;;
     4) run_backup ;;
     5) update_repository ;;
-    6) page_loading_fix ;;
-    7) killed_fix ;;
-    8) fix_15sec ;;
-    9) current_batch_fix ;;
-    10) echo -e "${GREEN}\nExiting... Goodbye!${NC}"; exit 0 ;;
-    *) echo -e "${GREEN}\nInvalid option. Please choose between 1-10.${NC}" ;;
+    6) remote_update_backup ;;
+    7) page_loading_fix ;;
+    8) killed_fix ;;
+    9) fix_15sec ;;
+    10) current_batch_fix ;;
+    11) echo -e "${GREEN}\nExiting... Goodbye!${NC}"; exit 0 ;;
+    *) echo -e "${GREEN}\nInvalid option. Please choose between 1-11.${NC}" ;;
   esac
   echo -e "\n${GREEN}Press any key to continue...${NC}"
   read -n1 -s
