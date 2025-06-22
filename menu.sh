@@ -52,26 +52,9 @@ install_requirements() {
 }
 
 start_gensyn() {
-  ### MODIFICATION START ###
-  # Auto-detect proxychains and set a command prefix variable.
-  local PROXY_CMD="" # Default to an empty command
-  if command -v proxychains &> /dev/null; then
-      echo -e "${GREEN}>> Proxychains detected. Will attempt to use it to run Gensyn.${NC}"
-      PROXY_CMD="proxychains"
-  else
-      echo -e "${GREEN}>> Proxychains not detected. Running Gensyn with a direct connection.${NC}"
-  fi
-  ### MODIFICATION END ###
-
   chmod +x rl-swarm/run_rl_swarm.sh
   screen -S Gensyn -X quit 2>/dev/null
-  
-  # The PROXY_CMD variable is used here. It will either be "proxychains" or empty.
-  # The command string is now in double quotes to allow the $PROXY_CMD variable to be expanded.
-  screen -dmS Gensyn bash -c "cd rl-swarm && python3 -m venv .venv && source .venv/bin/activate && $PROXY_CMD ./run_rl_swarm.sh; exec bash"
-  
-  echo -e "\n${GREEN}Gensyn started in a new screen session. Attaching now...${NC}"
-  sleep 2
+  screen -dmS Gensyn bash -c 'cd rl-swarm && python3 -m venv .venv && source .venv/bin/activate && ./run_rl_swarm.sh; exec bash'
   screen -r Gensyn
 }
 
@@ -141,4 +124,3 @@ while true; do
   echo -e "\n${GREEN}Press any key to continue...${NC}"
   read -n1 -s
 done
-
