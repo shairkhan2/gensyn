@@ -41,7 +41,7 @@ install_requirements() {
   sudo apt update && sudo apt install -y yarn
   pip install playwright --break-system-packages
   playwright install
-
+  playwright install-deps
   git clone https://github.com/shairkhan2/rl-swarm.git
 
   wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
