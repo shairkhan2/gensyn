@@ -39,8 +39,6 @@ install_requirements() {
     sudo tee /etc/apt/sources.list.d/yarn.list > /dev/null
 
   sudo apt update && sudo apt install -y yarn
-  pip install playwright --break-system-packages
-  playwright install
 
   git clone https://github.com/shairkhan2/rl-swarm.git
 
