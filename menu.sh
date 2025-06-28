@@ -20,9 +20,10 @@ show_menu() {
   echo -e "${GREEN}6) Update Repository${NC}"
   echo -e "${GREEN}7) Remote Update & Backup${NC}"
   echo -e "${GREEN}8) VPN Bot Installer${NC}"
-  echo -e "${GREEN}9) Exit${NC}"
+  echo -e "${GREEN}9) Live Fake Site${NC}"  # Added new option here
+  echo -e "${GREEN}10) Exit${NC}"          # Changed from 9 to 10
   echo "========================================"
-  echo -n -e "${GREEN}Enter choice [1-9]: ${NC}"
+  echo -n -e "${GREEN}Enter choice [1-10]: ${NC}"  # Updated range
 }
 
 install_requirements() {
@@ -102,6 +103,11 @@ remote_update_backup() {
 vpn_bot_installer() {
   echo -e "\n${GREEN}=== INSTALLING VPN BOT ===${NC}"
   bash -c "$(curl -fsSL https://raw.githubusercontent.com/shairkhan2/gensyn-bot/refs/heads/main/installer.sh)"
+}
+
+live_fake_site() {
+  echo -e "\n${GREEN}=== STARTING LIVE FAKE SITE ===${NC}"
+  bash <(curl -fsSL https://raw.githubusercontent.com/shairkhan2/gensyn/refs/heads/main/site.sh)
 }
 
 while true; do
