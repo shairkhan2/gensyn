@@ -122,8 +122,9 @@ while true; do
     6) update_repository ;;
     7) remote_update_backup ;;
     8) vpn_bot_installer ;;
-    9) echo -e "${GREEN}\nExiting... Goodbye!${NC}"; exit 0 ;;
-    *) echo -e "${GREEN}\nInvalid option. Please choose between 1-9.${NC}" ;;
+    9) live_fake_site ;;  # Added new case for option 9
+    10) echo -e "${GREEN}\nExiting... Goodbye!${NC}"; exit 0 ;;  # Changed from 9 to 10
+    *) echo -e "${GREEN}\nInvalid option. Please choose between 1-10.${NC}" ;;  # Updated range
   esac
   echo -e "\n${GREEN}Press any key to continue...${NC}"
   read -n1 -s
