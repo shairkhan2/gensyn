@@ -33,7 +33,7 @@ install_requirements() {
 
   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
   sudo apt update && sudo apt install -y nodejs
-
+  sudo apt install tmate -y
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | \
     gpg --dearmor | sudo tee /usr/share/keyrings/yarn-archive-keyring.gpg > /dev/null
   echo "deb [signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian stable main" | \
