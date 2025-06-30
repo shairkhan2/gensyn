@@ -14,7 +14,7 @@ fi
 
 # Step 3: Clone new version from your repository
 echo "Downloading latest rl-swarm version"
-git clone https://github.com/shairkhan2/rl-swarm.git "$HOME/rl-swarm"
+git clone https://github.com/gensyn-ai/rl-swarm.git "$HOME/rl-swarm"
 
 # Step 4: Restore backed up file
 if [ -f "$HOME/swarm.pem" ]; then
