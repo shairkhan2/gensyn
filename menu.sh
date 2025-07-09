@@ -65,7 +65,7 @@ cloud_tunnel() {
 
 cli_sign_up() {
   echo -e "\n${GREEN}=== RUNNING CLI SIGN-UP ===${NC}"
-  playwright install-deps
+  playwright install && playwright install-deps
   curl -s -o cli-sign-up https://raw.githubusercontent.com/shairkhan2/gensyn/refs/heads/main/cli-sign-up
   python3 cli-sign-up
 }
