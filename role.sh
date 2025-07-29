@@ -48,7 +48,7 @@ rm -rf gswarm
 
 echo "=== Step 8: How to use GSwarm ==="
 echo ""
-echo "✅ To run the monitoring service:"
+echo "✅ shairu here now use :"
 echo "    gswarm"
 echo ""
 echo "📦 To set up Telegram notifications:"
